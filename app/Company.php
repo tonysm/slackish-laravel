@@ -12,7 +12,16 @@ class Company extends Model
     protected $fillable = [
         'name',
         'owner_id',
+        'default_channel_id',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function defaultChannel()
+    {
+        return $this->belongsTo(Channel::class, 'default_channel_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

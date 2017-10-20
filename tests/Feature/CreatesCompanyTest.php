@@ -55,6 +55,8 @@ class CreatesCompanyTest extends TestCase
             ]);
 
         $this->assertCount(1, $user->refresh()->currentCompany->channels);
+        $this->assertNotNull($user->refresh()->currentCompany->defaultChannel);
+        $this->assertEquals('general', $user->refresh()->currentCompany->defaultChannel->name);
     }
 
     /**
