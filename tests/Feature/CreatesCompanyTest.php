@@ -44,4 +44,31 @@ class CreatesCompanyTest extends TestCase
         $this->assertNotNull($user->refresh()->company_id);
         $this->assertNotNull($user->currentCompany);
     }
+
+    /**
+     * @param $companyName
+     *
+     * @dataProvider invalidCompanyNames
+     */
+    public function testValidationFailedWhenCreatingCompanies($companyName)
+    {
+        $user = $this->createUserWithoutCompany();
+
+        $response = $this->actingAs($user)
+            ->post(route('companies.store'), [
+                'name' => $companyName,
+            ]);
+
+        $response->assertSessionHasErrors('name');
+        $this->assertNull($user->refresh()->currentCompany);
+    }
+
+    public function invalidCompanyNames()
+    {
+        return [
+            [''],
+            [null],
+            [str_random(256)],
+        ];
+    }
 }
