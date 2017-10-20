@@ -45,6 +45,10 @@ class User extends Authenticatable
             'owner_id' => $this->id
         ]);
 
+        $company->channels()->create([
+            'name' => 'general'
+        ]);
+
         $this->currentCompany()->associate($company);
         $this->save();
     }

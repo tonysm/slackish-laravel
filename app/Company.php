@@ -13,4 +13,12 @@ class Company extends Model
         'name',
         'owner_id',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function channels()
+    {
+        return $this->hasMany(Channel::class);
+    }
 }

@@ -10,7 +10,7 @@ class CreatesCompanyTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUsersWithoutCompanyCanCreateOne()
+    public function testUsersWithoutCompanyCanSeeCreationForm()
     {
         $user = $this->createUserWithoutCompany();
 
@@ -43,6 +43,18 @@ class CreatesCompanyTest extends TestCase
         $response->assertRedirect(route('home'));
         $this->assertNotNull($user->refresh()->company_id);
         $this->assertNotNull($user->currentCompany);
+    }
+
+    public function testCreatingCompaniesShouldCreateTheFirstChannel()
+    {
+        $user = $this->createUserWithoutCompany();
+
+        $this->actingAs($user)
+            ->post(route('companies.store'), [
+                'name' => 'madewithlove',
+            ]);
+
+        $this->assertCount(1, $user->refresh()->currentCompany->channels);
     }
 
     /**
