@@ -8,3 +8,5 @@ Route::get('/auth/{provider}', 'Auth\LoginController@create')->name('auth');
 Route::get('/auth/{provider}/callback', 'Auth\LoginController@store');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('companies', 'CompaniesController', ['only' => ['create', 'store']]);

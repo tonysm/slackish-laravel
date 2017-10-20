@@ -13,17 +13,8 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Company::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'google_id' => $faker->uuid,
-        'google_token' => str_random(20),
-    ];
-});
-
-$factory->state(App\User::class, 'without_company', function () {
-    return [
-        'company_id' => null,
+        'name' => $faker->company,
     ];
 });

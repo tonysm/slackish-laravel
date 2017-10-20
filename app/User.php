@@ -26,4 +26,26 @@ class User extends Authenticatable
     protected $hidden = [
         'email', 'google_id', 'google_token', 'api_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currentCompany()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    /**
+     * @param string $companyName
+     */
+    public function createCompany(string $companyName)
+    {
+        $company = $this->currentCompany()->create([
+            'name' => $companyName,
+            'owner_id' => $this->id
+        ]);
+
+        $this->currentCompany()->associate($company);
+        $this->save();
+    }
 }
