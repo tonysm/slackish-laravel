@@ -74,6 +74,7 @@ class LoginController extends Controller
             'google_token' => encrypt($providerUser->token),
             'name' => $providerUser->name,
             'email' => $providerUser->email,
+            'avatar_path' => $providerUser->getAvatar(),
         ]);
     }
 

@@ -15,7 +15,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'google_id', 'google_token', 'api_token',
+        'name',
+        'email',
+        'google_id',
+        'google_token',
+        'api_token',
+        'avatar_path',
     ];
 
     /**
@@ -33,6 +38,14 @@ class User extends Authenticatable
     public function currentCompany()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currentChannel()
+    {
+        return $this->belongsTo(Channel::class);
     }
 
     /**
@@ -54,6 +67,26 @@ class User extends Authenticatable
         ]);
 
         $this->currentCompany()->associate($company);
+        $this->currentChannel()->associate($channel);
+        $this->save();
+    }
+
+    /**
+     * @param \App\Channel $channel
+     *
+     * @return bool
+     */
+    public function canJoin(Channel $channel)
+    {
+        return $this->currentCompany->is($channel->company);
+    }
+
+    /**
+     * @param \App\Channel $channel
+     */
+    public function joinChannel(Channel $channel)
+    {
+        $this->currentChannel()->associate($channel);
         $this->save();
     }
 }
