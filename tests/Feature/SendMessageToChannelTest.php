@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Notifications\Channels\NewMessage;
+use App\Events\NewMessage;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Notification;
 use Ramsey\Uuid\Uuid;
@@ -16,12 +16,11 @@ class SendMessageToChannelTest extends TestCase
     public function testUserCanSendMessagesToTheirCurrent()
     {
         Broadcast::shouldReceive('event')->once()->andReturnSelf();
-        Broadcast::shouldReceive('toOthers')->once();
 
         $user = $this->createUser();
 
         $response = $this->actingAs($user, 'api')
-            ->postJson("/channels/{$user->current_channel_id}/messages", [
+            ->postJson("/api/channels/{$user->current_channel_id}/messages", [
                 'content' => 'Hello there',
                 'uuid' => Uuid::uuid4()->toString(),
             ]);
@@ -35,7 +34,7 @@ class SendMessageToChannelTest extends TestCase
         $otherUser = $this->createUser();
 
         $response = $this->actingAs($otherUser, 'api')
-            ->postJson("/channels/{$user->current_channel_id}/messages", [
+            ->postJson("/api/channels/{$user->current_channel_id}/messages", [
                 'content' => 'Hello there',
                 'uuid' => Uuid::uuid4()->toString(),
             ]);
@@ -49,7 +48,7 @@ class SendMessageToChannelTest extends TestCase
         $otherChannel = $user->currentCompany->channels()->create(['name' => 'backend']);
 
         $response = $this->actingAs($user, 'api')
-            ->postJson("/channels/{$otherChannel->id}/messages", [
+            ->postJson("/api/channels/{$otherChannel->id}/messages", [
                 'content' => 'Hello there',
                 'uuid' => Uuid::uuid4()->toString(),
             ]);

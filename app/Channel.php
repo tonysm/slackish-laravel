@@ -15,6 +15,14 @@ class Channel extends Model
     ];
 
     /**
+     * @var array
+     */
+    protected $visible = [
+        'id',
+        'name',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function company()

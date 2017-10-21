@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Http\Requests\Channels\SendMessageRequest;
-use App\Notifications\Channels\NewMessage;
-use Carbon\Carbon;
+use App\Events\NewMessage;
+use Illuminate\Support\Carbon;
 
 class ChannelMessagesController extends Controller
 {
@@ -23,7 +23,7 @@ class ChannelMessagesController extends Controller
             $request->input('content'),
             $request->input('uuid'),
             Carbon::now()
-        ))->toOthers();
+        ));
 
         return response()->json('', 201);
     }

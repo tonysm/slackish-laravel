@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function (Router $router) {
+    $router->get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    $router->get('channels', 'ChannelsController@index');
+    $router->resource('channels.messages', 'ChannelMessagesController', ['only' => ['store']]);
 });

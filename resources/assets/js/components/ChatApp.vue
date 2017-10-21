@@ -21,10 +21,36 @@
             </div>
             <div class="col-md-9">
                 <div class="panel panel-default channel-chat" v-if="currentChannel">
-                    <div class="panel-heading">This is your chat app</div>
+                    <div class="panel-heading">#{{ currentChannel.name}}</div>
 
-                    <div class="panel-body">
-                        I'm an example component!
+                    <div class="panel-body chat-content">
+                        <div class="chat-messages">
+                            <div class="media" v-for="message in currentChannelMessages" :key="message.uuid">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" :src="message.user.avatar_path" alt="User profile" />
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-heading">{{ message.user.name }} <small class="text-muted">{{ message.sentAt }}</small></h5>
+
+                                    <p v-text="message.content"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="form-group">
+                            <textarea
+                                    type="text"
+                                    class="form-control"
+                                    v-model="newMessage"
+                                    rows="2"
+                                    :placeholder="`Message #${currentChannel.name}`"
+                                    @keydown.enter.prevent="sendMessage()"
+                            >
+                            </textarea>
+                        </div>
                     </div>
                 </div>
 
@@ -39,14 +65,15 @@
 </template>
 
 <script>
+    import {getChannels, sendMessage} from './../api/Chat';
+
     export default {
         data () {
             return {
-                channels: [
-                    {id: 1, name: 'general'},
-                    {id: 2, name: 'backend'},
-                ],
+                channels: [],
                 currentChannel: null,
+                currentChannelMessages: [],
+                newMessage: '',
             };
         },
         methods: {
@@ -59,13 +86,32 @@
                     Echo.leave(`channels.${this.currentChannel.id}`);
                 }
 
-                Echo.private(`channels.${channel.id}`)
-                    .listen('Channels.NewMessage', (e) => {
-                        console.log(e);
-                    });
+                try {
+                    Echo.private(`channels.${channel.id}`)
+                        .listen('NewMessage', (e) => {
+                            this.currentChannelMessages.push(e);
+                        });
 
-                this.currentChannel = channel;
+                    this.currentChannel = channel;
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+            sendMessage () {
+                if (!this.newMessage) {
+                    return;
+                }
+
+                sendMessage(this.currentChannel, this.newMessage).then(() => {
+                    this.newMessage = '';
+                });
             }
+        },
+        mounted () {
+            getChannels()
+                .then((channels) => {
+                    this.channels = channels;
+                });
         }
     }
 </script>
@@ -84,5 +130,24 @@
 
     .not-joined {
         padding-top: 35%;
+    }
+
+    .chat-content {
+        height: 100%;
+    }
+
+    .chat-messages {
+        overflow-y: scroll;
+        height: 78%;
+    }
+
+    @media screen and (max-width: 480px){
+        .channel-chat {
+            height: 65vh;
+        }
+
+        .chat-messages {
+            height: 65%;
+        }
     }
 </style>

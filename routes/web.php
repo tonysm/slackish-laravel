@@ -10,4 +10,3 @@ Route::get('/auth/{provider}/callback', 'Auth\LoginController@store');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('companies', 'CompaniesController', ['only' => ['create', 'store']]);
-Route::resource('channels.messages', 'ChannelMessagesController', ['only' => ['store']]);

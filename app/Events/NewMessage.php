@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Notifications\Channels;
+namespace App\Events;
 
 use App\Channel;
 use App\User;
-use Carbon\Carbon;
-use Illuminate\Bus\Queueable;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Notifications\Notification;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 
-class NewMessage extends Notification implements ShouldBroadcast
+class NewMessage implements ShouldBroadcast
 {
-    use Queueable;
+    use SerializesModels;
 
     /**
      * @var \App\User
@@ -34,7 +34,7 @@ class NewMessage extends Notification implements ShouldBroadcast
     public $uuid;
 
     /**
-     * @var \Carbon\Carbon
+     * @var \Illuminate\Support\Carbon
      */
     public $sentAt;
 
@@ -45,7 +45,7 @@ class NewMessage extends Notification implements ShouldBroadcast
      * @param \App\Channel $channel
      * @param string $content
      * @param string $uuid
-     * @param \Carbon\Carbon $sentAt
+     * @param \Illuminate\Support\Carbon $sentAt
      */
     public function __construct(User $user, Channel $channel, string $content, string $uuid, Carbon $sentAt)
     {
@@ -57,21 +57,10 @@ class NewMessage extends Notification implements ShouldBroadcast
     }
 
     /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return ['broadcast'];
-    }
-
-    /**
-     * @return string
+     * @return PrivateChannel
      */
     public function broadcastOn()
     {
-        return "channels.{$this->channel->id}";
+        return new PrivateChannel( "channels.{$this->channel->id}");
     }
 }
