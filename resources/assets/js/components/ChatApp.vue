@@ -24,7 +24,7 @@
                     <div class="panel-heading">#{{ currentChannel.name}}</div>
 
                     <div class="panel-body chat-content">
-                        <div class="chat-messages">
+                        <div class="chat-messages" ref="chat">
                             <div class="media" v-for="message in currentChannelMessages" :key="message.uuid">
                                 <div class="media-left">
                                     <a href="#">
@@ -112,6 +112,13 @@
                 .then((channels) => {
                     this.channels = channels;
                 });
+        },
+        watch: {
+            currentChannelMessages () {
+                setTimeout(() => {
+                    this.$refs.chat.scrollTo(0, this.$refs.chat.scrollHeight);
+                }, 100);
+            }
         }
     }
 </script>

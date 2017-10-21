@@ -30637,6 +30637,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Object(__WEBPACK_IMPORTED_MODULE_0__api_Chat__["a" /* getChannels */])().then(function (channels) {
             _this3.channels = channels;
         });
+    },
+
+    watch: {
+        currentChannelMessages: function currentChannelMessages() {
+            var _this4 = this;
+
+            setTimeout(function () {
+                _this4.$refs.chat.scrollTo(0, _this4.$refs.chat.scrollHeight);
+            }, 100);
+        }
     }
 });
 
@@ -31084,7 +31094,7 @@ var render = function() {
               _c("div", { staticClass: "panel-body chat-content" }, [
                 _c(
                   "div",
-                  { staticClass: "chat-messages" },
+                  { ref: "chat", staticClass: "chat-messages" },
                   _vm._l(_vm.currentChannelMessages, function(message) {
                     return _c(
                       "div",
