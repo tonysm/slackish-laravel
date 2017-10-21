@@ -18,6 +18,26 @@
                     >
                     </a>
                 </div>
+
+                <div class="new-channel-form">
+                    <button class="btn btn-default btn-block" v-if="!showForm" @click.prevent="showForm = true">
+                        Create Channel
+                    </button>
+
+                    <form @submit.prevent="addChannel()" v-if="showForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="newChannel" @keydown.enter.prevent="addChannel()" />
+                        </div>
+
+                        <button @click.prevent="showForm = false" class="btn btn-default btn-sm">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="btn btn-default btn-sm">
+                            Create
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="col-md-9">
                 <div class="panel panel-default channel-chat" v-if="currentChannel">
@@ -65,7 +85,7 @@
 </template>
 
 <script>
-    import {getChannels, sendMessage} from './../api/Chat';
+    import {getChannels, sendMessage, createChannel} from './../api/Chat';
 
     export default {
         data () {
@@ -74,6 +94,8 @@
                 currentChannel: null,
                 currentChannelMessages: [],
                 newMessage: '',
+                newChannel: '',
+                showForm: false,
             };
         },
         methods: {
@@ -93,6 +115,7 @@
                         });
 
                     this.currentChannel = channel;
+                    this.currentChannelMessages = [];
                 } catch (e) {
                     console.log(e);
                 }
@@ -105,12 +128,28 @@
                 sendMessage(this.currentChannel, this.newMessage).then(() => {
                     this.newMessage = '';
                 });
+            },
+            addChannel () {
+                if (!this.newChannel) {
+                    return;
+                }
+
+                createChannel(this.newChannel)
+                    .then(() => {
+                        this.newChannel = '';
+                        this.showForm = false;
+                    })
             }
         },
         mounted () {
             getChannels()
                 .then((channels) => {
                     this.channels = channels;
+                });
+
+            Echo.private(`companies.${window.Laravel.company.id}`)
+                .listen('ChannelCreated', (e) => {
+                    this.channels.push(e.channel);
                 });
         },
         watch: {

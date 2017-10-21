@@ -28,3 +28,15 @@ Broadcast::channel('channels.{channel}', function (\App\User $user, \App\Channel
         'avatar_path' => $user->avatar_path,
     ];
 });
+
+Broadcast::channel('companies.{company}', function (\App\User $user, \App\Company $company) {
+    if (!$user->currentCompany || !$user->currentCompany->is($company)) {
+        return false;
+    }
+
+    return [
+        'id' => $user->id,
+        'name' => $user->name,
+        'avatar_path' => $user->avatar_path,
+    ];
+});

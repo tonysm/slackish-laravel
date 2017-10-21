@@ -30,4 +30,15 @@ class Company extends Model
     {
         return $this->hasMany(Channel::class);
     }
+
+    /**
+     * @param string $name
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function createChannel(string $name)
+    {
+        return $this->channels()
+            ->create(['name' => $name]);
+    }
 }

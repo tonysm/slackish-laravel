@@ -13,6 +13,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script>
+        @if(auth()->check())
+            window.Laravel = {!! json_encode([
+                'company' => auth()->user()->currentCompany,
+            ]) !!}
+        @endif
+    </script>
 </head>
 <body>
     <div>

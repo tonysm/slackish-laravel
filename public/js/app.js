@@ -30584,6 +30584,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30593,7 +30613,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             channels: [],
             currentChannel: null,
             currentChannelMessages: [],
-            newMessage: ''
+            newMessage: '',
+            newChannel: '',
+            showForm: false
         };
     },
 
@@ -30615,6 +30637,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
 
                 this.currentChannel = channel;
+                this.currentChannelMessages = [];
             } catch (e) {
                 console.log(e);
             }
@@ -30626,25 +30649,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return;
             }
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__api_Chat__["b" /* sendMessage */])(this.currentChannel, this.newMessage).then(function () {
+            Object(__WEBPACK_IMPORTED_MODULE_0__api_Chat__["c" /* sendMessage */])(this.currentChannel, this.newMessage).then(function () {
                 _this2.newMessage = '';
+            });
+        },
+        addChannel: function addChannel() {
+            var _this3 = this;
+
+            if (!this.newChannel) {
+                return;
+            }
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__api_Chat__["a" /* createChannel */])(this.newChannel).then(function () {
+                _this3.newChannel = '';
+                _this3.showForm = false;
             });
         }
     },
     mounted: function mounted() {
-        var _this3 = this;
+        var _this4 = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__api_Chat__["a" /* getChannels */])().then(function (channels) {
-            _this3.channels = channels;
+        Object(__WEBPACK_IMPORTED_MODULE_0__api_Chat__["b" /* getChannels */])().then(function (channels) {
+            _this4.channels = channels;
+        });
+
+        Echo.private('companies.' + window.Laravel.company.id).listen('ChannelCreated', function (e) {
+            _this4.channels.push(e.channel);
         });
     },
 
     watch: {
         currentChannelMessages: function currentChannelMessages() {
-            var _this4 = this;
+            var _this5 = this;
 
             setTimeout(function () {
-                _this4.$refs.chat.scrollTo(0, _this4.$refs.chat.scrollHeight);
+                _this5.$refs.chat.scrollTo(0, _this5.$refs.chat.scrollHeight);
             }, 100);
         }
     }
@@ -31081,7 +31120,109 @@ var render = function() {
             })
           ],
           2
-        )
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "new-channel-form" }, [
+          !_vm.showForm
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-default btn-block",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.showForm = true
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    Create Channel\n                "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showForm
+            ? _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.addChannel()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newChannel,
+                          expression: "newChannel"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.newChannel },
+                      on: {
+                        keydown: function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k($event.keyCode, "enter", 13, $event.key)
+                          ) {
+                            return null
+                          }
+                          $event.preventDefault()
+                          _vm.addChannel()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.newChannel = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default btn-sm",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.showForm = false
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Cancel\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default btn-sm",
+                      attrs: { type: "submit" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Create\n                    "
+                      )
+                    ]
+                  )
+                ]
+              )
+            : _vm._e()
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-9" }, [
@@ -31200,26 +31341,18 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = getChannels;
-/* harmony export (immutable) */ __webpack_exports__["b"] = sendMessage;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getChannels;
+/* harmony export (immutable) */ __webpack_exports__["c"] = sendMessage;
+/* harmony export (immutable) */ __webpack_exports__["a"] = createChannel;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_uuid__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-
-
-var Channel = function Channel(id, name) {
-    _classCallCheck(this, Channel);
-
-    this.id = id;
-    this.name = name;
-};
 
 function getChannels() {
     return axios('/api/channels').then(function (_ref) {
         var data = _ref.data;
         return data.data.map(function (channel) {
-            return new Channel(channel.id, channel.name);
+            return channel;
         });
     });
 }
@@ -31228,6 +31361,12 @@ function sendMessage(channel, message) {
     return axios.post('/api/channels/' + channel.id + '/messages', {
         content: message,
         uuid: __WEBPACK_IMPORTED_MODULE_0_uuid___default.a.v4()
+    });
+}
+
+function createChannel(channelName) {
+    return axios.post('/api/channels', {
+        name: channelName
     });
 }
 
