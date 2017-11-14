@@ -45,7 +45,7 @@
 
                     <div class="panel-body chat-content">
                         <div class="chat-messages" ref="chat">
-                            <div class="media" v-for="message in currentChannelMessages" :key="message.uuid">
+                            <div class="media" v-for="message in messages" :key="message.uuid">
                                 <div class="media-left">
                                     <a href="#">
                                         <img class="media-object" :src="message.user.avatar_path" alt="User profile" />
@@ -85,14 +85,14 @@
 </template>
 
 <script>
-    import {getChannels, sendMessage, createChannel} from './../api/Chat';
-
     export default {
+        props: [
+            'channels',
+            'messages',
+            'currentChannel',
+        ],
         data () {
             return {
-                channels: [],
-                currentChannel: null,
-                currentChannelMessages: [],
                 newMessage: '',
                 newChannel: '',
                 showForm: false,
@@ -100,60 +100,28 @@
         },
         methods: {
             joinChannel (channel) {
-                if (this.currentChannel && this.currentChannel.id === channel.id) {
-                    return;
-                }
-
-                if (this.currentChannel) {
-                    Echo.leave(`channels.${this.currentChannel.id}`);
-                }
-
-                try {
-                    Echo.private(`channels.${channel.id}`)
-                        .listen('NewMessage', (e) => {
-                            this.currentChannelMessages.push(e);
-                        });
-
-                    this.currentChannel = channel;
-                    this.currentChannelMessages = [];
-                } catch (e) {
-                    console.log(e);
-                }
+                this.$emit('join-channel', channel);
             },
             sendMessage () {
                 if (!this.newMessage) {
                     return;
                 }
 
-                sendMessage(this.currentChannel, this.newMessage).then(() => {
-                    this.newMessage = '';
-                });
+                this.$emit('new-message', this.newMessage);
+                this.newMessage = '';
             },
             addChannel () {
                 if (!this.newChannel) {
                     return;
                 }
 
-                createChannel(this.newChannel)
-                    .then(() => {
-                        this.newChannel = '';
-                        this.showForm = false;
-                    })
+                this.$emit('new-channel', this.newChannel);
+                this.newChannel = '';
+                this.showForm = false;
             }
         },
-        mounted () {
-            getChannels()
-                .then((channels) => {
-                    this.channels = channels;
-                });
-
-            Echo.private(`companies.${window.Laravel.company.id}`)
-                .listen('ChannelCreated', (e) => {
-                    this.channels.push(e.channel);
-                });
-        },
         watch: {
-            currentChannelMessages () {
+            messages () {
                 setTimeout(() => {
                     this.$refs.chat.scrollTo(0, this.$refs.chat.scrollHeight);
                 }, 100);
