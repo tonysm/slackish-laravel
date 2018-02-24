@@ -1,10 +1,10 @@
 <template>
     <div class="font-sans antialiased h-screen flex">
         <!-- Sidebar / channel list -->
-        <div class="bg-indigo-darker text-purple-lighter flex-row w-64 pb-6 hidden md:block">
+        <div class="bg-indigo-darker text-purple-lighter flex-col w-64 pb-6 hidden md:block relative">
             <div class="text-white mb-2 mt-3 px-4 flex justify-between">
                 <div class="flex-auto">
-                    <h1 class="font-semibold text-xl leading-tight mb-1 truncate">{{ currentCompany.name    }}</h1>
+                    <h1 class="font-semibold text-xl leading-tight mb-1 truncate">{{ currentCompany.name }}</h1>
                     <div class="flex items-center mb-6">
                         <span class="bg-green rounded-full block w-2 h-2 mr-2"></span>
                         <span class="text-white opacity-50 text-sm">{{ currentUser.name }}</span>
@@ -20,21 +20,35 @@
                 <div class="px-4 mb-2 text-white flex justify-between items-center">
                     <div class="opacity-75">Channels</div>
                     <div>
-                        <svg class="fill-current h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
-                        </svg>
+                        <a href class="text-white" @click.prevent="showForm = true">
+                            <svg class="fill-current h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
                 <a href class="text-white no-underline" @click.prevent="joinChannel(channel)" v-for="channel in channels">
-                    <div class="py-1 px-4 hover:bg-teal-dark" :class="{ 'bg-teal-dark': currentChannel && currentChannel.id === channel.id, 'opacity-50': !currentChannel || currentChannel.id !== channel.id  }">
-                            # {{channel.name}}
+                    <div class="py-1 px-4 hover:bg-teal-dark hover:text-white" :class="{ 'bg-teal-dark': currentChannel && currentChannel.id === channel.id, 'opacity-50': !currentChannel || currentChannel.id !== channel.id  }">
+                        # {{channel.name}}
                     </div>
                 </a>
+
+                <form class="w-full max-w-md m-4 flex" v-show="showForm" @submit.prevent="addChannel">
+                    <input
+                        class="appearance-none w-2/3 p-2 rounded bg-grey-lightest focus:bg-white"
+                        v-model="newChannel"
+                        type="text"
+                        placeholder="New Channel"
+                        @keypress.esc.prevent="showForm = false"
+                        autofocus
+                    />
+                    <button class="text-white ml-2 py-2 px-3 text-xs border boder-grey-lightest rounded">Save</button>
+                </form>
             </div>
-            <div class="border-t border-grey  er py-4">
-                <div class="px-4 mb-2 flex justify-between items-center">
+            <div class="p-4 flex absolute pin-b flex-col-reverse w-full text-center">
+                <div class="m-4">
                     <div class="opacity-75">
-                        <a href @click.prevent="$emit('logout')" class="text-white no-underline">Logout</a>
+                        <a href @click.prevent="$emit('logout')" class="py-2 px-6 rounded border border-white-light text-white no-underline">Logout</a>
                     </div>
                 </div>
             </div>
@@ -80,7 +94,7 @@
                 <span class="text-3xl text-grey border-r-2 border-grey p-2">
                     <svg class="fill-current h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16 10c0 .553-.048 1-.601 1H11v4.399c0 .552-.447.601-1 .601-.553 0-1-.049-1-.601V11H4.601C4.049 11 4 10.553 4 10c0-.553.049-1 .601-1H9V4.601C9 4.048 9.447 4 10 4c.553 0 1 .048 1 .601V9h4.399c.553 0 .601.447.601 1z"/></svg>
                   </span>
-                    <input type="text" class="w-full px-4" v-model="newMessage" @keypress.enter.prevent="sendMessage" :placeholder="`Message #${currentChannel.name}`" />
+                    <input type="text" autofocus class="w-full px-4" v-model="newMessage" @keypress.enter.prevent="sendMessage" :placeholder="`Message #${currentChannel.name}`" />
                 </div>
             </div>
         </div>
@@ -131,6 +145,6 @@
                     this.$refs.chat.scrollTo(0, this.$refs.chat.scrollHeight);
                 }, 100);
             }
-        }
+        },
     }
 </script>
