@@ -19,3 +19,10 @@ export function createChannel(channelName) {
         name: channelName,
     });
 }
+
+export function logout() {
+    return axios.post('/logout')
+        .then(() => {
+            window.location.replace('/');
+        });
+}

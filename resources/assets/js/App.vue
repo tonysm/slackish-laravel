@@ -1,18 +1,21 @@
 <template>
-  <chat-app 
-    :messages="messages"
-    :channels="channels"
-    :current-channel="currentChannel"
-    @new-message="newMessage"
-    @new-channel="newChannel"
-    @join-channel="joinChannel"
-  ></chat-app>
+    <chat-app
+            :messages="messages"
+            :channels="channels"
+            :current-channel="currentChannel"
+            :current-user="user"
+            :current-company="company"
+            @new-message="newMessage"
+            @new-channel="newChannel"
+            @join-channel="joinChannel"
+            @logout="logout"
+    />
 </template>
 
 <script>
     import ChatApp from './components/ChatApp.vue';
-    
-    import {SEND_NEW_MESSAGE, CREATE_NEW_CHANNEL, LIST_CHANNELS} from './store/actions';
+
+    import {SEND_NEW_MESSAGE, CREATE_NEW_CHANNEL, LIST_CHANNELS, LOGOUT} from './store/actions';
     import {NEW_CHANNEL, NEW_MESSAGE, JOINED_CHANNEL} from './store/mutations';
     import {mapState, mapActions} from 'vuex';
 
@@ -20,13 +23,13 @@
         components: {
             ChatApp
         },
-        computed: mapState(['messages', 'channels', 'currentChannel']),
+        computed: mapState(['messages', 'channels', 'currentChannel', 'user', 'company']),
         methods: {
             ...mapActions({
                 newMessage: SEND_NEW_MESSAGE,
                 newChannel: CREATE_NEW_CHANNEL,
             }),
-            joinChannel (channel) {
+            joinChannel(channel) {
                 if (this.currentChannel && this.currentChannel.id === channel.id) {
                     return;
                 }
@@ -51,9 +54,12 @@
                 } catch (e) {
                     console.log(e);
                 }
+            },
+            logout() {
+                this.$store.dispatch(LOGOUT);
             }
         },
-        mounted () {
+        mounted() {
             this.$store.dispatch(LIST_CHANNELS);
 
             Echo.private(`companies.${window.Laravel.company.id}`)

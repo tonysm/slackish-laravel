@@ -5,82 +5,210 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <title>Slackish</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/utilities.min.css" rel="stylesheet">
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('auth', ['provider' => 'google']) }}">Login with Google</a>
-                    @endauth
+        <div>
+            <header class="w-full font-sans">
+                <nav class="container mx-auto flex items-center justify-between flex-wrap py-3">
+                    <div class="flex items-center flex-no-shrink text-white mr-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="50 0 576 270" width="125" aria-label="Slackish" class="c-slacklogo--color svg-replaced" shape-rendering="geometricPrecision"><path fill="#ECB32D" d="M141.8 87.1c-1.9-5.7-8-8.8-13.7-7-5.7 1.9-8.8 8-7 13.7l28.1 86.4c1.9 5.3 7.7 8.3 13.2 6.7 5.8-1.7 9.3-7.8 7.4-13.4 0-.2-28-86.4-28-86.4z"></path><path fill="#63C1A0" d="M98.3 101.2c-1.9-5.7-8-8.8-13.7-7-5.7 1.9-8.8 8-7 13.7l28.1 86.4c1.9 5.3 7.7 8.3 13.2 6.7 5.8-1.7 9.3-7.8 7.4-13.4 0-.2-28-86.4-28-86.4z"></path><path fill="#E01A59" d="M177.2 158.6c5.7-1.9 8.8-8 7-13.7-1.9-5.7-8-8.8-13.7-7L84 166.1c-5.3 1.9-8.3 7.7-6.7 13.2 1.7 5.8 7.8 9.3 13.4 7.4.2 0 86.5-28.1 86.5-28.1z"></path><path fill="#331433" d="M102 183.1c5.6-1.8 12.9-4.2 20.7-6.7-1.8-5.6-4.2-12.9-6.7-20.7l-20.7 6.7 6.7 20.7z"></path><path fill="#D62027" d="M145.6 168.9c7.8-2.5 15.1-4.9 20.7-6.7-1.8-5.6-4.2-12.9-6.7-20.7l-20.7 6.7 6.7 20.7z"></path><path fill="#89D3DF" d="M163 115.1c5.7-1.9 8.8-8 7-13.7-1.9-5.7-8-8.8-13.7-7l-86.4 28.1c-5.3 1.9-8.3 7.7-6.7 13.2 1.7 5.8 7.8 9.3 13.4 7.4.2 0 86.4-28 86.4-28z"></path><path fill="#258B74" d="M87.9 139.5c5.6-1.8 12.9-4.2 20.7-6.7-2.5-7.8-4.9-15.1-6.7-20.7l-20.7 6.7 6.7 20.7z"></path><path fill="#819C3C" d="M131.4 125.4c7.8-2.5 15.1-4.9 20.7-6.7-2.5-7.8-4.9-15.1-6.7-20.7l-20.7 6.7 6.7 20.7z"></path><path fill="#2D333A" d="M264.8 109.8c3.8 1.7 4.1 2.9 1.1 8.6-3.1 5.8-3.8 6.2-7.6 4.7-4.7-2-10.8-3.5-14.7-3.5-6.4 0-10.6 2.3-10.6 5.8 0 11.5 36.6 5.3 36.6 29.7 0 12.3-10.6 20.5-26.4 20.5-8.3 0-18.6-2.8-25.7-6.4-3.5-1.8-3.8-2.8-.7-8.7 2.6-5.1 3.5-5.7 7.3-4.1 6 2.6 13.7 4.7 18.8 4.7 5.8 0 9.7-2.4 9.7-5.8 0-11.1-37.3-5.8-37.3-29.5 0-12.6 10.5-21 26.2-21 7.6-.1 16.9 2.1 23.3 5zM294.4 80.8V172c0 1.4-1.5 2.8-3.5 2.8h-9.6c-2.1 0-3.5-1.5-3.5-2.8V80.8c0-4.5 1.3-4.9 8.3-4.9 8-.1 8.3.5 8.3 4.9zM362.6 132v39.3c0 2.1-1.5 3.5-3.5 3.5h-9.5c-2.2 0-3.7-1.6-3.5-3.8l.1-4.2c-5.1 5.7-12.5 8.7-19.9 8.7-14.3 0-23.9-8.3-23.9-20.6 0-13.1 10.8-22 27.1-22 6.2 0 11.8 1.1 16.4 3v-4.5c0-7.2-5.7-11.5-15.4-11.5-4.5 0-10.1 1.8-14.5 4.4-3.4 1.9-4.2 1.8-7.9-3.7-3.6-5.5-3.5-6.5 0-8.8 6.7-4.3 15.7-7.1 24-7.1 18.7 0 30.5 10.1 30.5 27.3zm-44.2 22.8c0 4.7 4 7.8 9.9 7.8 7.2 0 13.8-3.5 17.6-9.4v-6.1c-3.8-1.5-8.5-2.3-12.6-2.3-9 0-14.9 4.2-14.9 10zM427.6 109.9c3.5 2 3.6 3.1-.2 9-3.6 5.6-4.2 5.9-8.1 4-2.9-1.5-7.6-2.8-11.4-2.8-12 0-20 7.9-20 19.9 0 12.4 8 20.8 20 20.8 4.2 0 9.4-1.6 12.8-3.5 3.5-2 4.2-1.9 7.9 3.5 3.3 5 3.3 6.2.3 8.3-5.4 3.7-13.8 6.5-21.3 6.5-22.2 0-37.1-14.2-37.1-35.6 0-21.2 14.9-35.3 37.3-35.3 6.8 0 14.8 2.3 19.8 5.2zM500.2 166.2c2.8 3.5 1.7 4.8-5.3 7.3-7.1 2.6-8.1 2.4-10.6-.8l-19.9-26.5-8.9 8.6V172c0 1.4-1.5 2.8-3.5 2.8h-9.6c-2.1 0-3.5-1.5-3.5-2.8V80.8c0-4.5 1.3-4.9 8.3-4.9 8.1 0 8.3.6 8.3 4.9v51.8l27.2-26.1c3-2.8 4.7-2.6 10 .9 5.9 3.8 6.3 4.9 3.5 7.6L476 134.8l24.2 31.4z"></path></svg>
+                    </div>
+                    <div class="block lg:hidden">
+                        <button class="flex items-center px-3 py-2 border rounded text-grey-dark border-grey-darker hover:text-grey hover:border-grey-dark">
+                            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                        </button>
+                    </div>
+                    <div class="w-full block text-right flex-grow lg:flex lg:items-center lg:w-auto">
+                        <div class="lg:flex-grow">
+                            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-dark hover:text-grey-darker no-underline mr-6">
+                                Why Slackish?
+                            </a>
+                            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-dark hover:text-grey-darker no-underline mr-6">
+                                Pricing
+                            </a>
+                            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-dark hover:text-grey-darker no-underline mr-6">
+                                About Us
+                            </a>
+                            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-dark hover:text-grey-darker no-underline mr-6">
+                                Find Your Workspace
+                            </a>
+                        </div>
+                        <div>
+                            @auth
+                                <a href="{{ url('/home') }}" class="inline-block px-4 py-2 leading-none border rounded text-grey-dark border-grey-dark no-underline hover:border-grey hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Home</a>
+                            @else
+                                <a href="{{ route('auth', ['provider' => 'google']) }}" class="inline-block px-4 py-2 leading-none border rounded text-grey-dark border-grey-dark no-underline hover:border-grey hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Login with Google</a>
+                            @endauth
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <main class="w-full">
+                <div class="border-t-2 border-grey-lighter">
+                    <div class="container mx-auto py-6">
+                        <div class="flex mt-6">
+                            <div class="w-1/2">
+                                <img
+                                        src="https://a.slack-edge.com/52353/marketing/img/home/home_illo.png"
+                                        srcset="https://a.slack-edge.com/52353/marketing/img/home/home_illo.png 1x, https://a.slack-edge.com/52353/marketing/img/home/home_illo@2x.png 2x"
+                                        alt=""
+                                />
+                            </div>
+                            <div class="w-1/2 font-serif">
+                                <h1 class="text-5xl font-black-darker font-black">Bring your team together</h1>
+                                <p class="text-grey-darker py-4 text-lg leading-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium consequatur cumque ea error esse, est id illo nemo nostrum obcaecati odio pariatur perferendis porro quo quos ut velit.</p>
+                                <div class="block flex py-4 mr-6">
+                                    <input class="w-2/3 py-6 px-4 mr-2 border border-grey-light rounded text-grey-darkest text-sm" type="email" placeholder="Email address" />
+                                    <button class="w-1/3 font-sans py-4 px-4 border-transparent bg-purple-dark text-white rounded uppercase font-bold text-sm">get started</button>
+                                </div>
+                                <span class="text-xs text-grey-darker leading-normal">Already using Slackish? <a href="#" class="text-blue-darker hover:text-blue-dark">Sign in</a>.</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            @endif
+                <div class="border-t-2 border-grey-lighter bg-grey-lighter">
+                    <div class="container mx-auto py-6 text-center">
+                        <div class="mb-6">
+                            <h2 class="font-black-darker font-serif text-3xl pt-6">You're in good company</h2>
+                            <p class="text-grey-darker mb-2 font-sans p-4">Millions of people around the world have already made Slackish the place where their work happens.</p>
+                            <button class="py-4 px-8 mt-2 text-sm font-black border border-purple-dark hover:border-2 text-purple-darker bg-white uppercase rounded font-mono">discover why</button>
+                        </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Chat with your team-mates.
+                        <div class="flex pt-6 font-serif text-grey-darker">
+                            <div class="w-1/3 p-6 border-r-2 border-grey-light">
+                                <h1 class="text-2xl mt-6 mb-6">Fancy Company</h1>
+                            </div>
+                            <div class="w-1/3 p-6 border-r-2 border-grey-light">
+                                <h1 class="text-2xl mt-6 mb-6">Fancy Company</h1>
+                            </div>
+                            <div class="w-1/3 p-6">
+                                <h1 class="text-2xl mt-6 mb-6">Fancy Company</h1>
+                            </div>
+                        </div>
+                        <div class="flex border-t-2 font-serif border-grey-light text-grey-darker text-grey-darker">
+                            <div class="w-1/3 p-6 border-r-2 border-grey-light">
+                                <h1 class="text-2xl mt-6 mb-6">Fancy Company</h1>
+                            </div>
+                            <div class="w-1/3 p-6 border-r-2 border-grey-light">
+                                <h1 class="text-2xl mt-6 mb-6">Fancy Company</h1>
+                            </div>
+                            <div class="w-1/3 p-6">
+                                <h1 class="text-2xl mt-6 mb-6">Fancy Company</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <div class="bg-white">
+                    <div class="container mx-auto py-6">
+                        <div class="flex">
+                            <div class="w-1/2 text-left py-6">
+                                <h3 class="text-2xl pb-2 font-serif">Try it for free</h3>
+                                <span class="text-sm font-sans text-grey-darker leading-normal">Already using Slackish? <a href="#" class="text-blue-darker hover:text-blue-dark">Sign in</a>.</span>
+                            </div>
+                            <div class="w-1/2">
+                                <div class="block flex py-6 mr-6">
+                                    <input class="w-2/3 py-6 px-4 mr-2 border border-grey-light rounded text-grey-darkest text-sm" type="email" placeholder="Email address" />
+                                    <button class="w-1/3 font-sans py-4 px-4 border-transparent bg-purple-dark text-white rounded uppercase font-bold text-sm">get started</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border-t-2 border-grey-lighter">
+                    <div class="container mx-auto py-6 my-6">
+                        <div class="flex">
+                            <div class="w-1/4">
+                                <a href="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-101 331 132 132" width="54" height="54" aria-label="Slack" class="c-nav--footer__svgicon c-slackhash svg-replaced" shape-rendering="geometricPrecision"><path d="M-16.7 343.1c-1.9-5.7-8-8.8-13.7-7-5.7 1.9-8.8 8-7 13.7l28.1 86.4c1.9 5.3 7.7 8.3 13.2 6.7 5.8-1.7 9.3-7.8 7.4-13.4 0-.2-28-86.4-28-86.4z" fill="#ECB32D"></path><path d="M-60.2 357.2c-1.9-5.7-8-8.8-13.7-7-5.7 1.9-8.8 8-7 13.7l28.1 86.4c1.9 5.3 7.7 8.3 13.2 6.7 5.8-1.7 9.3-7.8 7.4-13.4 0-.2-28-86.4-28-86.4z" fill="#63C1A0"></path><path d="M18.7 414.6c5.7-1.9 8.8-8 7-13.7-1.9-5.7-8-8.8-13.7-7l-86.5 28.2c-5.3 1.9-8.3 7.7-6.7 13.2 1.7 5.8 7.8 9.3 13.4 7.4.2 0 86.5-28.1 86.5-28.1z" fill="#E01A59"></path><path d="M-56.5 439.1c5.6-1.8 12.9-4.2 20.7-6.7-1.8-5.6-4.2-12.9-6.7-20.7l-20.7 6.7 6.7 20.7z" fill="#331433"></path><path d="M-12.9 424.9c7.8-2.5 15.1-4.9 20.7-6.7-1.8-5.6-4.2-12.9-6.7-20.7l-20.7 6.7 6.7 20.7z" fill="#D62027"></path><path d="M4.5 371.1c5.7-1.9 8.8-8 7-13.7-1.9-5.7-8-8.8-13.7-7l-86.4 28.1c-5.3 1.9-8.3 7.7-6.7 13.2 1.7 5.8 7.8 9.3 13.4 7.4.2 0 86.4-28 86.4-28z" fill="#89D3DF"></path><path d="M-70.6 395.5c5.6-1.8 12.9-4.2 20.7-6.7-2.5-7.8-4.9-15.1-6.7-20.7l-20.7 6.7 6.7 20.7z" fill="#258B74"></path><path d="M-27.1 381.4c7.8-2.5 15.1-4.9 20.7-6.7-2.5-7.8-4.9-15.1-6.7-20.7l-20.7 6.7 6.7 20.7z" fill="#819C3C"></path></svg>
+                                </a>
+                            </div>
+
+                            <div class="flex-grow">
+                                <div class="flex font-sans text-xs pl-6">
+                                    <div class="w-1/4">
+                                        <h4 class="uppercase py-4 text-grey-darker">company</h4>
+                                        <ul class="list-reset text-grey-dark">
+                                            <li class="py-2">About Us</li>
+                                            <li class="py-2">Careers</li>
+                                            <li class="py-2">Blog</li>
+                                            <li class="py-2">Press</li>
+                                            <li class="py-2">Brand Guidelines</li>
+                                        </ul>
+                                    </div>
+                                    <div class="w-1/4">
+                                        <h4 class="uppercase py-4 text-grey-darker">product</h4>
+                                        <ul class="list-reset text-grey-dark">
+                                            <li class="py-2">Why Slackish?</li>
+                                            <li class="py-2">Enterprise</li>
+                                            <li class="py-2">Customer Stories</li>
+                                            <li class="py-2">Pricing</li>
+                                            <li class="py-2">Security</li>
+                                        </ul>
+                                    </div>
+                                    <div class="w-1/4">
+                                        <h4 class="uppercase py-4 text-grey-darker">resources</h4>
+                                        <ul class="list-reset text-grey-dark">
+                                            <li class="py-2">Download</li>
+                                            <li class="py-2">Help Center</li>
+                                            <li class="py-2">Guides</li>
+                                            <li class="py-2">Partners</li>
+                                            <li class="py-2">Events</li>
+                                            <li class="py-2">App Directory</li>
+                                            <li class="py-2">API</li>
+                                            <li class="py-2">Gartner Report</li>
+                                            <li class="py-2">eBooks</li>
+                                        </ul>
+                                    </div>
+                                    <div class="w-1/4">
+                                        <h4 class="uppercase py-4 text-grey-darker">extras</h4>
+                                        <ul class="list-reset font-sans text-grey-dark">
+                                            <li class="py-2">Podcast</li>
+                                            <li class="py-2">Slackish Shop</li>
+                                            <li class="py-2">Slackish at Work</li>
+                                            <li class="py-2">Slackish Fund</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="w-full border-t-2 border-grey-lighter bg-grey-lighter py-6">
+                <div class="container mx-auto">
+                    <div class="flex">
+                        <div class="w-1/2 font-sans text-grey-darkest font-black text-sm">
+                            <ul class="flex flex-row list-reset">
+                                <li class="p-2">Status</li>
+                                <li class="p-2">Privacy & Terms</li>
+                                <li class="p-2">Contact Us</li>
+                            </ul>
+                        </div>
+                        <div class="w-1/2">
+                            <ul class="flex flex-row-reverse list-reset">
+                                <li class="p-2"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 32 32" width="20" height="20" aria-label="YouTube" class="c-nav--footer__svgicon svg-replaced" shape-rendering="geometricPrecision"><path d="M31.67 9.18s-.312-2.354-1.27-3.39c-1.218-1.358-2.58-1.366-3.206-1.443C22.717 4 16.002 4 16.002 4h-.015s-6.715 0-11.19.347c-.626.077-1.988.085-3.206 1.443C.635 6.826.32 9.18.32 9.18S0 11.94 0 14.7v2.59c0 2.762.32 5.522.32 5.522s.312 2.352 1.27 3.386c1.22 1.358 2.816 1.317 3.528 1.46 2.56.26 10.877.342 10.877.342s6.722-.012 11.2-.355c.624-.08 1.987-.088 3.204-1.446.956-1.036 1.27-3.388 1.27-3.388s.32-2.76.32-5.523V14.7c0-2.76-.32-5.522-.32-5.522z"></path><path fill="#FFF" d="M12 10v12l10-6"></path></svg></li>
+                                <li class="p-2"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="126.445 2.281 589 589" aria-label="Facebook" class="c-nav--footer__svgicon svg-replaced" shape-rendering="geometricPrecision"><path d="M516.704 92.677h-65.24c-38.714 0-81.776 16.283-81.776 72.402.19 19.553 0 38.28 0 59.356H324.9v71.27h46.174v205.178h84.847v-206.53h56.003l5.067-70.118h-62.53s.14-31.19 0-40.25c0-22.176 23.075-20.906 24.463-20.906 10.98 0 32.332.032 37.813 0V92.677h-.032z"></path></svg></li>
+                                <li class="p-2"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 32 32" width="20" height="20" aria-label="Twitter" class="c-nav--footer__svgicon svg-replaced" shape-rendering="geometricPrecision"><path d="M31.993 6.077c-1.177.523-2.44.876-3.77 1.033 1.355-.812 2.396-2.098 2.887-3.63-1.27.75-2.673 1.3-4.168 1.592C25.744 3.797 24.038 3 22.15 3c-3.626 0-6.563 2.938-6.563 6.563 0 .514.057 1.016.17 1.496C10.3 10.783 5.464 8.17 2.227 4.2c-.565.97-.89 2.098-.89 3.3 0 2.28 1.16 4.287 2.92 5.465-1.076-.035-2.088-.33-2.973-.82v.08c0 3.182 2.26 5.835 5.264 6.438-.55.15-1.13.23-1.73.23-.423 0-.833-.04-1.233-.117.834 2.606 3.26 4.504 6.13 4.558-2.245 1.76-5.075 2.81-8.15 2.81-.53 0-1.053-.03-1.566-.09C2.905 27.914 6.355 29 10.062 29c12.072 0 18.675-10 18.675-18.675 0-.284-.008-.568-.02-.85 1.283-.925 2.395-2.08 3.276-3.398z"></path></svg></li>
+                                <li class="px-2 relative">
+                                    <select class="block appearance-none w-full bg-grey-lighter border border-grey-light text-grey-darker py-2 px-4 pr-8 rounded">
+                                        <option>English</option>
+                                        <option>Português</option>
+                                        <option>Dutch</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute pin-y pin-r flex items-center px-4 text-grey-darker">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
