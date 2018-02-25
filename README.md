@@ -12,7 +12,9 @@ For this application, I'm using:
 - [TailwindCSS](https://tailwindcss.com/)
 - [Laravel Socialite](https://laravel.com/docs/5.6/socialite)
 
-The internal code I took from Adam Wathan's [Slack Clone](https://tailwindcomponents.com/component/slack-clone-1).
+The internal code I took from Adam Wathan's [Slack Clone](https://tailwindcomponents.com/component/slack-clone-1). 
+
+I know it's not responsive right now, what about sending a PR?
 
 ## Setup
 
