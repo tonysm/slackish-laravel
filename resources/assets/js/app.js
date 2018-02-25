@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import App from './App.vue';
 import store from './store';
-import {LOAD_USER} from './store/mutations';
+import { LOAD_USER } from './store/mutations';
 
 Vue.use(Vuex);
 

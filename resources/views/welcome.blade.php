@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Slackish</title>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/utilities.min.css" rel="stylesheet">
+        <link href="{{ mix('css/main.css') }}" rel="stylesheet">
     </head>
     <body>
         <div>
@@ -79,7 +78,7 @@
                         <div class="mb-6">
                             <h2 class="font-black-darker font-serif text-3xl pt-6">You're in good company</h2>
                             <p class="text-grey-darker mb-2 font-sans p-4">Millions of people around the world have already made Slackish the place where their work happens.</p>
-                            <button class="py-4 px-8 mt-2 text-sm font-black border border-purple-dark hover:border-2 text-purple-darker bg-white uppercase rounded font-mono">discover why</button>
+                            <button class="py-4 px-8 mt-2 text-sm font-black border border-purple-dark hover:border-purple-darkest text-purple-darker bg-white uppercase rounded font-mono">discover why</button>
                         </div>
 
                         <div class="flex pt-6 font-serif text-grey-darker">

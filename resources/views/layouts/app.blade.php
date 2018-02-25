@@ -12,8 +12,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/utilities.min.css" rel="stylesheet">
+    <link href="{{ mix('css/main.css') }}" rel="stylesheet">
     <script>
         @if(auth()->check())
             window.Laravel = {!! json_encode([
