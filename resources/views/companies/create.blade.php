@@ -17,7 +17,7 @@
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="company-name">
                                 Company Name
                             </label>
-                            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-4 px-4 mb-3" id="company-name" name="name" type="text" placeholder="ie: madewithlove">
+                            <input class="appearance-none block w-full bg-white text-grey-darker border border-grey-light rounded py-4 px-4 mb-3" id="company-name" name="name" type="text" placeholder="ie: madewithlove">
                             <p class="text-grey-dark text-xs italic">{{ $errors->first('name') }}</p>
                         </div>
 

@@ -98,6 +98,12 @@
                 </div>
             </div>
         </div>
+        <div v-else class="flex-1 h-full w-full bg-grey-lightest flex items-center">
+            <div class="flex-1 align-middle text-center">
+                <h1 class="text-6xl font-black p-2">Welcome to Slackish!</h1>
+                <p class="p-2">Join a channel to start chatting.</p>
+            </div>
+        </div>
     </div>
 </template>
 
