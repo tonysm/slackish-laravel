@@ -56,9 +56,8 @@
                         <div class="flex mt-6">
                             <div class="w-1/2">
                                 <img
-                                        src="https://a.slack-edge.com/52353/marketing/img/home/home_illo.png"
-                                        srcset="https://a.slack-edge.com/52353/marketing/img/home/home_illo.png 1x, https://a.slack-edge.com/52353/marketing/img/home/home_illo@2x.png 2x"
-                                        alt=""
+                                    src="{{ asset('home_illo.png') }}"
+                                    alt="hero screen"
                                 />
                             </div>
                             <div class="w-1/2 font-serif">

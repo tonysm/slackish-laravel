@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <a href class="text-white no-underline" @click.prevent="joinChannel(channel)" v-for="channel in channels">
-                    <div class="py-1 px-4 hover:bg-teal-dark hover:text-white" :class="{ 'bg-teal-dark': currentChannel && currentChannel.id === channel.id, 'opacity-50': !currentChannel || currentChannel.id !== channel.id  }">
+                    <div class="py-1 px-4 hover:bg-teal-dark" :class="{ 'bg-teal-dark': currentChannel && currentChannel.id === channel.id, 'opacity-50': !currentChannel || currentChannel.id !== channel.id  }">
                         # {{channel.name}}
                     </div>
                 </a>
