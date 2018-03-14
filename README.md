@@ -23,8 +23,8 @@ If you want to run it locally, here is the setup:
 - Clone it
 - Copy the `.env.example` to `.env`
 - Pull composer dependencies using `composer install'
-- Pull npm dependencies using `npm i`
-- Build the assets `npm run dev`
+- Pull npm dependencies using `yarn`
+- Build the assets `yarn dev`
 - Run `php artisan key:generate`
 - Create your database (I use a sqlite file for testing reasons, feel free to use whatever you want)
 - Configure the database credentials in the `.env` file
