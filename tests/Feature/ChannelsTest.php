@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Company;
+use App\Events\ChannelCreated;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -33,7 +35,7 @@ class ChannelsTest extends TestCase
 
     public function testUsersCanCreateChannelsOnTheirCompanies()
     {
-        Broadcast::shouldReceive('event')->once();
+        Event::fake();
         $user = $this->createUser();
 
         $response = $this->actingAs($user, 'api')
@@ -41,7 +43,12 @@ class ChannelsTest extends TestCase
                 'name' => 'New Channel',
             ]);
 
+        $channels = $user->currentCompany->channels;
+
         $response->assertStatus(201);
-        $this->assertCount(2, $user->currentCompany->channels);
+        $this->assertCount(2, $channels);
+        Event::assertDispatched(ChannelCreated::class, function (ChannelCreated $event) use ($channels) {
+            return $channels->contains($event->channel);
+        });
     }
 }

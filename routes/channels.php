@@ -26,6 +26,7 @@ Broadcast::channel('channels.{channel}', function (\App\User $user, \App\Channel
         'id' => $user->id,
         'name' => $user->name,
         'avatar_path' => $user->avatar_path,
+        'joined_at' => now(),
     ];
 });
 
@@ -38,5 +39,6 @@ Broadcast::channel('companies.{company}', function (\App\User $user, \App\Compan
         'id' => $user->id,
         'name' => $user->name,
         'avatar_path' => $user->avatar_path,
+        'joined_at' => now(),
     ];
 });

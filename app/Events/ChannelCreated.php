@@ -4,7 +4,7 @@ namespace App\Events;
 
 use App\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class ChannelCreated implements ShouldBroadcast
@@ -33,6 +33,6 @@ class ChannelCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("companies.{$this->channel->company_id}");
+        return new PresenceChannel("companies.{$this->channel->company_id}");
     }
 }
