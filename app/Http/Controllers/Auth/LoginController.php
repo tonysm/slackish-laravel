@@ -47,8 +47,6 @@ class LoginController extends Controller
 
         $user = $this->findOrCreate($providerUser);
 
-        $user->update(['api_token' => str_random(60)]);
-
         auth()->login($user);
 
         return redirect()->home();
@@ -62,10 +60,6 @@ class LoginController extends Controller
     private function findOrCreate(AbstractUser $providerUser)
     {
         if ($user = User::where('google_id', $providerUser->id)->first()) {
-            return $user;
-        }
-
-        if ($user = User::where('email', $providerUser->email)->first()) {
             return $user;
         }
 
