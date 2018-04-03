@@ -45,6 +45,20 @@
                     <button class="text-white ml-2 py-2 px-3 text-xs border boder-grey-lightest rounded">Save</button>
                 </form>
             </div>
+            <div class="mb-8">
+                <div class="px-4 mb-2 text-white flex justify-between items-center">
+                    <div class="opacity-75">Direct Messages</div>
+                    <div>
+                        <svg class="fill-current h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex items-center mb-3 px-4" v-for="user in users" :key="user.id">
+                    <span class="bg-green rounded-full block w-2 h-2 mr-2"></span>
+                    <span class="text-white opacity-75">{{ user.name }} <span v-if="user.id === currentUser.id" class="text-grey text-sm">(you)</span></span>
+                </div>
+            </div>
             <div class="p-4 flex absolute pin-b flex-col-reverse w-full text-center">
                 <div class="m-4">
                     <div class="opacity-75">
@@ -115,6 +129,7 @@
             'currentChannel',
             'currentUser',
             'currentCompany',
+            'users',
         ],
         data () {
             return {

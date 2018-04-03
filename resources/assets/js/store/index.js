@@ -7,6 +7,7 @@ const state = {
     currentChannel: null,
     user: null,
     company: null,
+    users: [],
 };
 
 export default {

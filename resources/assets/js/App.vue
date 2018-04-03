@@ -1,29 +1,37 @@
 <template>
     <chat-app
-            :messages="messages"
-            :channels="channels"
-            :current-channel="currentChannel"
-            :current-user="user"
-            :current-company="company"
-            @new-message="newMessage"
-            @new-channel="newChannel"
-            @join-channel="joinChannel"
-            @logout="logout"
+        :messages="messages"
+        :channels="channels"
+        :current-channel="currentChannel"
+        :current-user="user"
+        :current-company="company"
+        :users="users"
+        @new-message="newMessage"
+        @new-channel="newChannel"
+        @join-channel="joinChannel"
+        @logout="logout"
     />
 </template>
 
 <script>
-    import ChatApp from './components/ChatApp.vue';
+    import { mapState, mapActions } from 'vuex';
 
-    import {SEND_NEW_MESSAGE, CREATE_NEW_CHANNEL, LIST_CHANNELS, LOGOUT} from './store/actions';
-    import {NEW_CHANNEL, NEW_MESSAGE, JOINED_CHANNEL} from './store/mutations';
-    import {mapState, mapActions} from 'vuex';
+    import ChatApp from './components/ChatApp.vue';
+    import { NEW_CHANNEL, NEW_MESSAGE, JOINED_CHANNEL, LOAD_USERS, USER_JOINED, USER_LEFT } from './store/mutations';
+    import { SEND_NEW_MESSAGE, CREATE_NEW_CHANNEL, LIST_CHANNELS, LOGOUT } from './store/actions';
 
     export default {
         components: {
             ChatApp
         },
-        computed: mapState(['messages', 'channels', 'currentChannel', 'user', 'company']),
+        computed: mapState([
+            'messages',
+            'channels',
+            'currentChannel',
+            'user',
+            'company',
+            'users',
+        ]),
         methods: {
             ...mapActions({
                 newMessage: SEND_NEW_MESSAGE,
@@ -62,7 +70,25 @@
         mounted() {
             this.$store.dispatch(LIST_CHANNELS);
 
-            Echo.private(`companies.${window.Laravel.company.id}`)
+            Echo.join(`companies.${window.Laravel.company.id}`)
+                .here((users) => {
+                    this.$store.commit({
+                        type: LOAD_USERS,
+                        users,
+                    });
+                })
+                .joining((user) => {
+                    this.$store.commit({
+                        type: USER_JOINED,
+                        user,
+                    });
+                })
+                .leaving((user) => {
+                    this.$store.commit({
+                        type: USER_LEFT,
+                        user,
+                    });
+                })
                 .listen('ChannelCreated', (e) => {
                     this.$store.commit({
                         type: NEW_CHANNEL,
