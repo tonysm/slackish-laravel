@@ -11,6 +11,7 @@ For this application, I'm using:
 - [Pusher](https://pusher.com/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Laravel Socialite](https://laravel.com/docs/5.6/socialite)
+- [Laravel Passport](https://laravel.com/docs/5.6/passport)
 
 The internal code I took from Adam Wathan's [Slack Clone](https://tailwindcomponents.com/component/slack-clone-1). 
 
@@ -29,6 +30,7 @@ If you want to run it locally, here is the setup:
 - Create your database (I use a sqlite file for testing reasons, feel free to use whatever you want)
 - Configure the database credentials in the `.env` file
 - Run the migrations `php artisan migrate`
+- Setup passport `php artisan passport:install`
 - Create a Pusher Account and configure the credentials in the `.env` file
 - You need to generate [OAuth Application](https://console.developers.google.com/apis/dashboard) and enable the Google Plus contact permission
 - After that, configure your `.env` to use those credentials, the redirect URL I use is `http://localhost:8000/auth/google/callback`
