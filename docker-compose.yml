@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+    web:
+        image: jwilder/nginx-proxy 
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        ports:
+            - "80:80"
+        networks:
+            - front
+    php:
+        image: hitalos/laravel:latest
+        environment:
+            VIRTUAL_HOST: "slackish.com"
+        volumes:
+            - .:/var/www
+        networks:
+            - front
+            - back
+    db:
+        image: mysql:5.7
+        volumes:
+            - mysqldata:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: "secret"
+            MYSQL_DATABASE: "homestead"
+            MYSQL_USER: "homestead"
+            MYSQL_PASSWORD: "secret"
+        networks:
+            - back
+    redis:
+        image: redis:latest
+        networks:
+            - back
+    worker:
+        image: hitalos/laravel:latest
+        command: php artisan queue:work
+        volumes:
+            - .:/var/www
+        networks:
+            - back
+
+networks:
+    back:
+        driver: "bridge"
+    front:
+        driver: "bridge"
+
+volumes:
+    mysqldata:
+        driver: "local"
