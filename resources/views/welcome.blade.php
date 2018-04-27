@@ -62,7 +62,7 @@
                             </div>
                             <div class="w-1/2 font-serif">
                                 <h1 class="text-5xl font-black-darker font-black">Bring your team together</h1>
-                                <p class="text-grey-darker py-4 text-lg leading-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium consequatur cumque ea error esse, est id illo nemo nostrum obcaecati odio pariatur perferendis porro quo quos ut velit.</p>
+                                <p class="text-grey-darker py-4 text-lg leading-normal">{{ gethostname() }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium consequatur cumque ea error esse, est id illo nemo nostrum obcaecati odio pariatur perferendis porro quo quos ut velit.</p>
                                 <div class="block flex py-4 mr-6">
                                     <input class="w-2/3 py-6 px-4 mr-2 border border-grey-light rounded text-grey-darkest text-sm" type="email" placeholder="Email address" />
                                     <button class="w-1/3 font-sans py-4 px-4 border-transparent bg-purple-dark text-white rounded uppercase font-bold text-sm">get started</button>
