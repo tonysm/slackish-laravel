@@ -15,9 +15,7 @@ use Illuminate\Routing\Router;
 */
 
 Route::middleware('auth:api')->group(function (Router $router) {
-    $router->get('/user', function (Request $request) {
-        return $request->user();
-    });
+    $router->get('/user', 'Api/UserController@index');
 
     $router->resource('channels', 'ChannelsController', ['only' => ['store', 'index']]);
     $router->resource('channels.messages', 'ChannelMessagesController', ['only' => ['store']]);
