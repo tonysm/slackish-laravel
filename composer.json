@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "fideloper/proxy": "~4.0",
         "laravel/framework": "5.6.*",
+        "laravel/horizon": "^1.2",
         "laravel/passport": "^5.0",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
