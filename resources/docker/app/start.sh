@@ -8,6 +8,8 @@ env=${APP_ENV:-production}
 if [ "$env" != "local" ]; then
     echo "Caching configuration..."
     (cd /var/www/html && php artisan config:cache && php artisan route:cache && php artisan view:cache)
+    echo "Running the migrations..."
+    php /var/www/html/artisan migrate -f
 fi
 
 if [ "$role" = "app" ]; then
