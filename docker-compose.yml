@@ -36,6 +36,8 @@ services:
             - .:/var/www/html
         networks:
             - back
+        depends_on:
+            - redis
     db:
         image: mysql:5.7
         volumes:
