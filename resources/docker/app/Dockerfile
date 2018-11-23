@@ -1,4 +1,4 @@
-FROM php:7.2-apache-stretch
+FROM php:7.1-apache-stretch
 
 COPY ./vendor /var/www/html/vendor
 COPY . /var/www/html
