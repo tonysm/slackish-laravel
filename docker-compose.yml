@@ -23,8 +23,6 @@ services:
             - back
     worker:
         image: tonysm/slackish-laravel-app
-        depends_on:
-            - app
         environment:
             APP_ENV: local
             CONTAINER_ROLE: queue
@@ -37,6 +35,7 @@ services:
         networks:
             - back
         depends_on:
+            - app
             - redis
     db:
         image: mysql:5.7
