@@ -21,6 +21,23 @@ services:
         networks:
             - front
             - back
+    websockets:
+        image: tonysm/slackish-laravel-app
+        environment:
+            APP_ENV: local
+            CONTAINER_ROLE: websockets
+            CACHE_DRIVER: redis
+            SESSION_DRIVER: redis
+            QUEUE_DRIVER: redis
+            REDIS_HOST: redis
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "6001:6001"
+        networks:
+            - back
+        depends_on:
+            - app
     worker:
         image: tonysm/slackish-laravel-app
         environment:

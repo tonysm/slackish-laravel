@@ -16,6 +16,11 @@ if [[ "$role" = "app" ]]; then
 
     exec apache2-foreground
 
+elif [[ "$role" = "websockets" ]]; then
+
+    echo "Running the Laravel WebSockets..."
+    php /var/www/html/artisan websockets:serve --host=0.0.0.0
+
 elif [[ "$role" = "queue" ]]; then
 
     echo "Running the queue..."
